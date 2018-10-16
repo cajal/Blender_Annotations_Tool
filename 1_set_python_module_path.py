@@ -1,4 +1,4 @@
-#####RUN ONLY ONCE THE FIRST TIME YOU LOAD THE PROJECT 
+#####RUN ONLY ONCE THE FIRST TIME YOU LOAD THE PROJECT
 #######AND THEN RESTART
 
 
@@ -9,17 +9,17 @@ import os
 from pathlib import Path
 
 def ShowMessageBox(message = "", title = "Message Box", icon = 'INFO'):
-
+    
     def draw(self, context):
         self.layout.label(message)
-
+    
     bpy.context.window_manager.popup_menu(draw, title = title, icon = icon)
 
 
 class MessageBoxOperator(bpy.types.Operator):
     bl_idname = "ui.show_message_box"
     bl_label = "Minimal Operator"
-
+    
     def execute(self, context):
         #this is where I send the message
         self.report({'INFO'}, "MUST RELOAD BLENDER ONCE TO CONFIG PYTHON!!!!")
@@ -30,23 +30,23 @@ class MessageBoxOperator(bpy.types.Operator):
 
 def set_Up_Modules():
     
-
+    
     dir_path = os.path.dirname(os.path.realpath(__file__))
-
+    
     data_folder = Path(dir_path)
     just_Folder = data_folder.parents[0]
     complete_path = just_Folder / "blender_scripts"
     print(complete_path)
     bpy.context.user_preferences.filepaths.script_directory = str(complete_path)
-
+    
     bpy.ops.wm.save_userpref()
     
-    #Shows a message box with a specific message 
-    ShowMessageBox("Must Exit and Reload Blender to Config Python") 
+    #Shows a message box with a specific message
+    ShowMessageBox("Must Exit and Reload Blender to Config Python")
     
     bpy.utils.register_class(MessageBoxOperator)
-
-    # test call to the 
+    
+    # test call to the
     bpy.ops.ui.show_message_box()
 
 
@@ -59,10 +59,10 @@ import os
 currentDir = os.getcwd()
 
 
-if len(bpy.context.user_preferences.filepaths.script_directory) < 4 : 
+if len(bpy.context.user_preferences.filepaths.script_directory) < 4 :
     print("Python Script Path DOESN'T exists")
     set_Up_Modules()
-        
+
 else:
     print("Python Script Path already exists-but need to make sure for right system")
     
@@ -86,7 +86,7 @@ else:
         print("script was configured for different type of system")
         #make it run the setup Script
         set_Up_Modules()
-
+    
     else:
         #make sure that the current path is still the same
         currentPath = bpy.context.user_preferences.filepaths.script_directory
@@ -102,4 +102,4 @@ else:
         else:
             print("current_Path does not match the saved path")
             set_Up_Modules()
-    
+
